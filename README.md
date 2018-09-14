@@ -24,3 +24,7 @@ yarn run lint
 ```
 yarn run test:unit
 ```
+
+### TODO:
+1. Detection of logged in state (show avatar, current name, etc)
+1. Handle cases when signing up but email is already taken (wrong password)

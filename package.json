@@ -9,6 +9,10 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@vue/web-component-wrapper": "^1.2.0",
+    "auth0-js": "^9.7.3",
+    "flow-bin": "^0.80.0",
+    "global": "^4.3.2",
     "vue": "^2.5.17"
   },
   "devDependencies": {
