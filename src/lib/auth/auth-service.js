@@ -1,9 +1,12 @@
 import auth0 from "auth0-js";
+import autoBind from "auto-bind";
 import { AUTH_CONFIG } from "@/config/auth0-variables";
 import { isEmptyObject } from "@/lib/utils";
 
 export default class AuthService {
-  constructor() {}
+  constructor() {
+    autoBind(this);
+  }
 
   webAuth = new auth0.WebAuth({
     domain: AUTH_CONFIG.domain,
