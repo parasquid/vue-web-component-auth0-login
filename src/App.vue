@@ -49,8 +49,10 @@ export default {
         password: password,
         redirectUri: "http://localhost:8080/callback.html",
         callback: r => {
-          this.sessionDetails = r;
-          this.$refs.spinner.style.display = "none";
+          auth.parseHash(r, user => {
+            this.sessionDetails = user;
+            this.$refs.spinner.style.display = "none";
+          });
         }
       });
     },
