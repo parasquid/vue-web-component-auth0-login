@@ -37,6 +37,15 @@ export default {
       });
       this.$emit("submit", e);
     }
+  },
+  watch: {
+    email() {
+      this.$emit("input", {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      });
+    }
   }
 };
 </script>
