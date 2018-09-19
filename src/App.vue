@@ -16,6 +16,9 @@
     <br />
     <button @click="logout">Logout</button>
 
+    <br />
+    <button @click="changePassword">Change Password</button>
+
     <div>
       <h1>Session Details</h1>
       {{ JSON.stringify(sessionDetails, null, 2) }}
@@ -25,7 +28,7 @@
 
 <script>
 import AuthService from "@/lib/auth/auth-service";
-import SilentAuthentication from "@/lib/auth/silent-authentication.js";
+import SilentAuthenticator from "@/lib/auth/silent-authenticator.js";
 import SignUp from "@/components/SignUp";
 
 const auth = new AuthService();
@@ -44,7 +47,7 @@ export default {
       e.preventDefault();
       this.$refs.spinner.style.display = "block";
       const { email, password } = this.signupDetails;
-      new SilentAuthentication({
+      const iframe = new SilentAuthenticator({
         email: email,
         password: password,
         redirectUri: "http://localhost:8080/callback.html",
@@ -52,6 +55,7 @@ export default {
           auth.parseHash(r, user => {
             this.sessionDetails = user;
             this.$refs.spinner.style.display = "none";
+            iframe.destroy();
           });
         }
       });
@@ -61,6 +65,11 @@ export default {
     },
     logout() {
       auth.logout("http://localhost:8080/");
+    },
+    changePassword() {
+      auth.changePassword(this.signupDetails.email, r => {
+        console.log(r);
+      });
     }
   },
   created() {
@@ -68,7 +77,7 @@ export default {
       if (user.hasOwnProperty("error")) {
         console.log(user);
       } else {
-        this.sessionDetails = user;
+        this.sessionDetails = user.idTokenPayload;
         this.signupDetails = user.idTokenPayload;
       }
     });

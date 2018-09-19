@@ -39,6 +39,17 @@ export default class AuthService {
     });
   }
 
+  changePassword(email, callback) {
+    console.log(email);
+    this.webAuth.changePassword(
+      {
+        connection: "Username-Password-Authentication",
+        email: email
+      },
+      r => callback(r)
+    );
+  }
+
   checkSession(callback) {
     this.webAuth.checkSession({}, (err, authResult) => {
       if (err) {

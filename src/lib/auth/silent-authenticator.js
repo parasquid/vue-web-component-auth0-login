@@ -11,10 +11,11 @@ export default class SilentAuthentication {
     this.password = options.password || "";
     this.redirectUri = options.redirectUri || _window.location.origin;
 
-    this.iframe = _window.document.createElement("iframe");
-    this._setupIframe(this.iframe);
-    _window.document.body.appendChild(this.iframe);
-    this.iframe.srcdoc = `
+    this._iframe = _window.document.createElement("iframe");
+    this._setupIframe(this._iframe);
+
+    _window.document.body.appendChild(this._iframe);
+    this._iframe.srcdoc = `
     <html>
       <head>
         <script src="https://cdn.auth0.com/js/auth0/9.5.1/auth0.min.js"></script>
@@ -50,6 +51,12 @@ export default class SilentAuthentication {
     _window.addEventListener("message", callbackListener, false);
 
     autoBind(this);
+  }
+
+  destroy() {
+    if (this._iframe.parentNode) {
+      this._iframe.parentNode.removeChild(this._iframe);
+    }
   }
 
   _setupIframe(iframe) {
