@@ -27,7 +27,7 @@ export default class PopupAuthenticator {
 
     const script = this._popup.document.createElement("script");
     script.innerHTML = `
-      function waitForAuth0() {
+      (function waitForAuth0() {
         if(typeof auth0 !== "undefined") {
           var webAuth = new auth0.WebAuth({
             domain: "${this.domain}",
@@ -41,8 +41,7 @@ export default class PopupAuthenticator {
           console.log("waiting for auth0");
           setTimeout(waitForAuth0, 250);
         }
-      }
-      waitForAuth0();
+      })();
     `;
     this._popup.document.head.appendChild(script);
 
