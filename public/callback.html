@@ -7,6 +7,10 @@
         type: "authorization_response",
         response: window.location.hash
       }, "*")
+      window.opener.postMessage({
+        type: "authorization_response",
+        response: window.location.hash
+      }, "*")
   </script>
 </head>
 <body>

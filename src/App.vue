@@ -30,6 +30,7 @@
 import { AUTH_CONFIG } from "@/config/auth0-variables";
 import AuthService from "@/lib/auth/auth-service";
 import SilentAuthenticator from "@/lib/auth/silent-authenticator.js";
+import PopupAuthenticator from "@/lib/auth/popup-authenticator.js";
 import SignUp from "@/components/SignUp";
 
 const auth = new AuthService();
@@ -64,7 +65,18 @@ export default {
       });
     },
     facebook() {
-      auth.loginWithFacebook();
+      const popup = new PopupAuthenticator({
+        domain: AUTH_CONFIG.domain,
+        clientId: AUTH_CONFIG.clientId,
+        redirectUri: "http://localhost:8080/callback.html",
+        callback: r => {
+          auth.parseHash(r, user => {
+            this.sessionDetails = user;
+            this.$refs.spinner.style.display = "none";
+            popup.destroy();
+          });
+        }
+      });
     },
     logout() {
       auth.logout("http://localhost:8080/");
