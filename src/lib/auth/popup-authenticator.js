@@ -6,8 +6,6 @@ export default class PopupAuthenticator {
     const defaultCallback = event => console.log(event);
 
     this.callback = options.callback || defaultCallback;
-    this.email = options.email || "";
-    this.password = options.password || "";
     this.redirectUri = options.redirectUri || _window.location.origin;
     this.domain = options.domain;
     this.clientId = options.clientId;
