@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { AUTH_CONFIG } from "@/config/auth0-variables";
 import AuthService from "@/lib/auth/auth-service";
 import SilentAuthenticator from "@/lib/auth/silent-authenticator.js";
 import SignUp from "@/components/SignUp";
@@ -50,6 +51,8 @@ export default {
       const iframe = new SilentAuthenticator({
         email: email,
         password: password,
+        domain: AUTH_CONFIG.domain,
+        clientId: AUTH_CONFIG.clientId,
         redirectUri: "http://localhost:8080/callback.html",
         callback: r => {
           auth.parseHash(r, user => {

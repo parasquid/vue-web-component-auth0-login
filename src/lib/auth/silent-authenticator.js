@@ -10,6 +10,8 @@ export default class SilentAuthentication {
     this.email = options.email || "";
     this.password = options.password || "";
     this.redirectUri = options.redirectUri || _window.location.origin;
+    this.domain = options.domain;
+    this.clientId = options.clientId;
 
     this._iframe = _window.document.createElement("iframe");
     this._setupIframe(this._iframe);
@@ -21,8 +23,8 @@ export default class SilentAuthentication {
         <script src="https://cdn.auth0.com/js/auth0/9.5.1/auth0.min.js"></script>
         <script>
           var webAuth = new auth0.WebAuth({
-            domain: 'mvstg.auth0.com',
-            clientID: 'nnoeBQBXyJXDNBk0vU7U29fPWai2WGnI',
+            domain: "${this.domain}",
+            clientID: "${this.clientId}",
             redirectUri: "${this.redirectUri}",
             responseType: "code token id_token",
             scope: "openid profile email"
